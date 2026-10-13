@@ -1,25 +1,24 @@
 ---
 layout: home
 permalink: index.html
-repository-name: vigilix
-title: "Vigilix - Driver Vigilance and Risk Monitoring System"
+repository-name: e22-3yp-RoadEye
+title: "Edge-AI Driver Vigilance and Risk Monitoring System with Fleet Supervision"
 ---
 
-# Vigilix — Edge-AI Driver Vigilance and Risk Monitoring System with Fleet Supervision
+# Edge-AI Driver Vigilance and Risk Monitoring System with Fleet Supervision
 
 **Group 21 – Team Invictus**
 
----
-
 ## Team
 
-Add your team members' details below.
+| E-Number | Name | Email |
+|---|---|---|
+| E/22/336 | Dileka Sadaruwan | [e22336@eng.pdn.ac.lk](mailto:e22336@eng.pdn.ac.lk) |
+| E/22/396 | Pahan Prabash | [e22396@eng.pdn.ac.lk](mailto:e22396@eng.pdn.ac.lk) |
+| E/22/188 | Dhanushka Kavindaya | [e22188@eng.pdn.ac.lk](mailto:e22188@eng.pdn.ac.lk) |
+| E/22/372 | Imasha Sewmini | [e22372@eng.pdn.ac.lk](mailto:e22372@eng.pdn.ac.lk) |
 
-- E/YY/XXX, Team Member Name, [email](mailto:member@eng.pdn.ac.lk)
-- E/YY/XXX, Team Member Name, [email](mailto:member@eng.pdn.ac.lk)
-- E/YY/XXX, Team Member Name, [email](mailto:member@eng.pdn.ac.lk)
-
-#### Table of Contents
+## Table of Contents
 
 1. [Introduction](#introduction)
 2. [Solution Architecture](#solution-architecture)
@@ -31,39 +30,39 @@ Add your team members' details below.
 
 ## Introduction
 
-Driver drowsiness and distraction are important road-safety concerns, particularly during long-distance journeys and repetitive driving. Drivers experiencing reduced vigilance may show prolonged eye closure, head drooping, or sustained attention away from the road. These behaviours can increase accident risk, while fleet operators may lack an affordable way to monitor safety events across multiple vehicles.
+Driver drowsiness and distraction are important road-safety concerns, particularly during long-distance journeys and repetitive driving. Reduced vigilance may be associated with prolonged eye closure, head drooping, or sustained attention away from the road. Fleet operators may also lack an affordable way to review safety events across multiple vehicles.
 
-**Vigilix** is a low-cost, retrofit driver-vigilance and risk-monitoring system that combines Edge AI, embedded systems, and a web-based fleet-supervision platform. A driver-facing camera captures visual information, while a Raspberry Pi processes video locally to identify potential drowsiness and distraction. An ESP32 controls physical warning devices, such as a buzzer, vibration motor, and warning LEDs, to alert the driver when a potential risk is detected.
+This project proposes a low-cost, retrofit driver-vigilance and risk-monitoring system combining Edge AI, embedded systems, and a web-based fleet-supervision platform. A driver-facing camera provides visual input to a Raspberry Pi, which processes frames locally to identify potential drowsiness and distraction. An ESP32 interfaces with contextual sensors and controls local warning devices such as a buzzer, vibration motor, and warning LEDs.
 
-The system also incorporates contextual information, including GPS-derived vehicle speed, to support explainable driving-risk assessment. A secure web application provides separate interfaces for drivers, fleet managers, and administrators to review trips, monitor safety events, supervise vehicles, and manage system records.
+Contextual information, including GPS-derived vehicle speed, may contribute to explainable driving-risk levels. A secure multi-user web application is planned for drivers, fleet managers, and administrators. Facial video is intended to be processed locally rather than continuously uploaded, and local detection and alerts are designed to continue during Internet outages.
 
-Vigilix is intended for transport operators, logistics companies, and other organizations operating vehicle fleets. Facial video is processed locally rather than continuously uploaded, and local detection and alerts are designed to continue during Internet outages.
+The system is intended for transport operators, logistics companies, and other organizations operating vehicle fleets. It is a driver-assistance prototype and will not directly control the vehicle.
 
-### Project Objectives
+### Objectives
 
-- Develop a standalone driver-vigilance monitoring prototype using Edge AI.
+- Develop a standalone driver-vigilance prototype using Edge AI.
 - Detect potential drowsiness and distraction through multi-frame visual analysis.
-- Provide immediate local alerts without depending on Internet connectivity.
-- Integrate contextual sensor information into an explainable driving-risk assessment.
-- Develop a secure, role-based web application for multi-user fleet supervision.
-- Evaluate detection performance, false alarms, alert latency, and system reliability.
+- Provide local alerts without depending on Internet connectivity.
+- Combine driver-state indicators with contextual information for explainable risk assessment.
+- Develop a secure, role-based web application for fleet supervision.
+- Evaluate detection performance, false alarms, alert latency, edge performance, and offline recovery.
 
 ## Solution Architecture
 
-The system combines visual monitoring, edge processing, embedded alerts, backend services, and a fleet-supervision web application.
+The planned system combines visual monitoring, edge processing, embedded alerts, backend services, and a multi-user fleet-supervision web application.
 
 ### High-Level Architecture
 
 ```mermaid
 flowchart TD
     A[Driver-Facing Camera] --> B[Raspberry Pi]
-    C[GPS and Contextual Sensors] --> D[ESP32]
-    B --> E[Computer Vision and Temporal Analysis]
-    E --> F[Driving-Risk Assessment]
-    F --> G[Local Alert Commands]
-    G --> D
-    D --> H[Buzzer, Vibration Motor and LEDs]
-    F --> I[MQTT / HTTP]
+    B --> C[Computer Vision and Temporal Analysis]
+    C --> D[Driving-Risk Assessment]
+    D --> E[Local Alert Command]
+    E --> F[ESP32]
+    G[GPS and Contextual Sensors] --> F
+    F --> H[Buzzer, Vibration Motor and LEDs]
+    D --> I[MQTT / HTTP]
     I --> J[Backend API]
     J --> K[(Database)]
     K --> L[Driver Dashboard]
@@ -73,110 +72,87 @@ flowchart TD
 
 ### Main Components
 
-- **Raspberry Pi:** Runs the computer-vision pipeline, temporal analysis, and risk-assessment engine locally.
-- **Camera:** Captures driver facial and head-pose information for vigilance analysis.
+- **Raspberry Pi:** Runs the local computer-vision pipeline, temporal analysis, and risk-assessment logic.
+- **Driver-facing camera:** Captures visual information for vigilance analysis.
 - **ESP32:** Interfaces with sensors and controls physical warning devices.
-- **Contextual sensors:** GPS-derived speed and other feasible sensor readings support risk assessment.
+- **GPS and contextual sensors:** Provide contextual readings when available and feasible.
 - **Backend and database:** Store user accounts, vehicles, devices, trips, alerts, and device-health records.
 - **Web application:** Provides role-based dashboards for drivers, fleet managers, and administrators.
-- **Communication:** MQTT or HTTP will be used to transmit events and device-health information.
+- **Communication:** MQTT or HTTP will be evaluated for event and device-health messages.
 
 The local detection-and-alert process is designed to continue during Internet outages. Events can be queued locally and synchronized when connectivity returns.
 
 ## Hardware and Software Designs
 
-### Hardware Design
+### Planned Hardware
 
 | Component | Purpose |
 |---|---|
 | Raspberry Pi | Edge computing and local computer vision |
-| Driver-facing camera | Capturing driver facial and head-pose information |
+| Driver-facing camera | Capturing driver visual information |
 | ESP32 development board | Sensor interfacing and alert control |
 | GPS module | Estimating vehicle speed when available |
-| Buzzer | Audible warnings |
-| Vibration motor | Physical driver alerts |
-| Warning LEDs | Visual status and risk indication |
-| Power supply, wiring, and enclosure | Power management and prototype integration |
+| Buzzer | Audible warning |
+| Vibration motor | Physical alert |
+| Warning LEDs | Visual status and warning indication |
+| Power supply, wiring, and enclosure | Prototype integration |
 
-Steering-wheel contact sensing and optional sensors may be evaluated during prototyping, depending on feasibility and budget.
+The final component list may change based on availability, feasibility, and budget.
 
-### Software Design
+### Planned Software
 
-**Edge processing**
-- Python-based vision pipeline
-- Face and eye analysis
-- Temporal drowsiness and distraction detection
-- Explainable driving-risk assessment
-- Local event logging and offline queueing
-
-**Embedded firmware**
-- ESP32 sensor integration
-- Alert-device control
-- Communication with the Raspberry Pi
-- Device-status reporting
-
-**Backend and database**
-- User authentication and authorization
-- Driver, vehicle, and device management
-- Trip and safety-event storage
-- Device-health monitoring
-- Role-based API access
-
-**Web application**
-- Driver dashboard
-- Fleet-manager dashboard
-- Administrator dashboard
-- Trip history and safety-event reports
-- Vehicle and device-status monitoring
-
-The exact computer-vision libraries, backend framework, database, and frontend stack will be documented once finalized by the team.
+- **Edge processing:** Python and suitable computer-vision libraries.
+- **Embedded firmware:** ESP32 firmware for sensor input, alert control, and device status.
+- **Communication:** MQTT or HTTP, to be finalized.
+- **Backend and database:** To be selected and documented during implementation.
+- **Web application:** Role-based interfaces for drivers, fleet managers, and administrators.
+- **Operating system:** Raspberry Pi OS/Linux on the Raspberry Pi.
 
 ### User Roles
 
-| User Role | Main Functions |
+| Role | Main Functions |
 |---|---|
-| Driver | View current status, receive alerts, review trips, and check assigned vehicle and device status |
-| Fleet Manager | Monitor multiple drivers and vehicles, review safety events, identify potential speed violations, and view summary reports |
-| Administrator | Manage accounts, permissions, driver and vehicle records, devices, and system logs |
+| Driver | View driving status, receive alerts, review trips, and check assigned vehicle/device status |
+| Fleet Manager | Supervise multiple drivers and vehicles, review trips and safety events, identify potential speed violations, and view summary reports |
+| Administrator | Manage user accounts, permissions, driver and vehicle records, devices, and system logs |
 
 ### Privacy and Security
 
-Facial video will be processed locally rather than continuously uploaded to the server. Authentication, role-based access controls, device authentication, and secure server communication will be included in the design.
+The design aims to process facial video locally rather than continuously upload it to the server. Authentication, role-based access controls, device authentication, and secure server communication are planned.
 
 ## Testing
 
-Testing will evaluate the accuracy, responsiveness, and reliability of the proposed system. Results should be added after tests are performed; no performance figures are assumed in advance.
+Testing will evaluate detection quality, alert responsiveness, and system reliability. Add measured results after tests are performed; no performance figures are claimed here.
 
 ### Planned Test Scenarios
 
-- Normal blinking compared with prolonged eye closure
-- Head drooping and sustained looking-away behaviour
-- Different users and lighting conditions
-- False warnings and missed detections
-- Configured speed-limit threshold tests
-- Buzzer, vibration motor, and LED response
-- Edge inference performance on the Raspberry Pi
-- Network disconnection and event synchronization after reconnection
-- Role-based access restrictions and unauthorized API requests
-- Device-health reporting and service-restart recovery
+- Normal blinking compared with prolonged eye closure.
+- Head drooping and sustained looking-away behaviour.
+- Different users and lighting conditions.
+- False warnings and missed events.
+- Configured speed-threshold tests.
+- Buzzer, vibration motor, and LED response.
+- Edge inference performance on the Raspberry Pi.
+- Network disconnection and event synchronization after reconnection.
+- Role-based access restrictions and device-health reporting.
 
 ### Evaluation Metrics
 
 | Metric | Purpose |
 |---|---|
-| Precision and recall | Evaluate detection quality |
+| Precision and recall | Measure detection quality |
 | False-alarm rate | Measure unnecessary warnings |
-| Missed-event rate | Identify undetected risk events |
+| Missed-event rate | Measure undetected risk events |
 | Alert latency | Measure time from detection to warning |
-| Inference performance | Evaluate edge-device processing speed |
-| Network recovery | Verify event synchronization after outages |
-| Access-control tests | Verify separation between user roles |
+| Inference performance | Measure edge-device processing performance |
+| Network recovery | Check synchronization after an outage |
+| Access-control tests | Verify role separation |
 
 Experiments are planned using suitable public datasets and a smaller, consent-based controlled dataset.
 
 ## Detailed Budget
 
-The preliminary hardware target is approximately **LKR 30,000**, assuming a Raspberry Pi is borrowed. Final costs will depend on component availability and the hardware already accessible to the team.
+The preliminary hardware target is approximately **LKR 30,000**, assuming a Raspberry Pi can be borrowed. Final costs depend on component availability and hardware already accessible to the team.
 
 | Item | Quantity | Unit Cost | Total |
 |---|---:|---:|---:|
@@ -187,23 +163,23 @@ The preliminary hardware target is approximately **LKR 30,000**, assuming a Rasp
 | Buzzer, vibration motor, and LEDs | 1 set | To be confirmed | To be confirmed |
 | Contextual sensors and wiring | 1 set | To be confirmed | To be confirmed |
 | Power supply and enclosure | 1 set | To be confirmed | To be confirmed |
-| **Estimated target** | | | **30,000 LKR** |
+| **Preliminary target** | | | **30,000 LKR** |
 
-This is a preliminary target, not a final cost breakdown. Replace the estimates with actual component prices and quantities once confirmed.
+This is a preliminary target, not a final cost breakdown. Replace estimates with actual quotations and quantities once confirmed.
 
 ## Conclusion
 
-Vigilix proposes an affordable Edge-AI solution for driver-vigilance monitoring and fleet supervision. By combining local computer vision, embedded alerts, contextual risk assessment, and a secure multi-user web application, the project aims to help drivers respond to potential safety risks while enabling fleet managers to review events across multiple vehicles.
+This project aims to develop an affordable Edge-AI driver-vigilance and fleet-supervision prototype. By combining local computer vision, embedded alerts, contextual risk assessment, and a multi-user web application, the system is intended to help drivers respond to potential safety risks and enable fleet managers to review events across multiple vehicles.
 
-Expected deliverables include a working hardware prototype, a local warning mechanism, a backend and database, role-based dashboards, and an experimental evaluation report. Future developments may include improved detection under challenging lighting conditions, optimized edge inference, expanded fleet analytics, and pilot testing with transport operators.
-
-The system is intended as a driver-assistance and fleet-supervision solution and will not directly control the vehicle.
+Expected deliverables include a hardware prototype, local warning mechanism, backend and database, role-based dashboards, and an experimental evaluation report. Future work may include improving detection under challenging lighting conditions, optimizing edge inference, expanding fleet analytics, and pilot testing with transport operators.
 
 ## Links
 
-- [Project Repository](https://github.com/cepdnaclk/vigilix)
-- [Project Page](https://cepdnaclk.github.io/vigilix/)
+- [Project Repository](https://github.com/cepdnaclk/e22-3yp-RoadEye)
+- [Project Page](https://cepdnaclk.github.io/e22-3yp-RoadEye/)
 - [Department of Computer Engineering](http://www.ce.pdn.ac.lk/)
 - [University of Peradeniya](https://eng.pdn.ac.lk/)
 
-**Important:** Update the repository and project-page URLs if your actual GitHub repository name differs from `vigilix`.
+---
+
+*Developed by Group 21 – Team Invictus as an Embedded Systems project at the University of Peradeniya.*
