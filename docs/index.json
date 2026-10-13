@@ -1,6 +1,27 @@
 {
-  "title": "Vigilix - Edge-AI Driver Vigilance and Risk Monitoring System with Fleet Supervision",
-  "team": [],
+  "title": "Edge-AI Driver Vigilance and Risk Monitoring System with Fleet Supervision",
+  "team": [
+    {
+      "name": "Dileka Sadaruwan",
+      "email": "e22336@eng.pdn.ac.lk",
+      "eNumber": "E/22/336"
+    },
+    {
+      "name": "Pahan Prabash",
+      "email": "e22396@eng.pdn.ac.lk",
+      "eNumber": "E/22/396"
+    },
+    {
+      "name": "Dhanushka Kavindaya",
+      "email": "e22188@eng.pdn.ac.lk",
+      "eNumber": "E/22/188"
+    },
+    {
+      "name": "Imasha Sewmini",
+      "email": "e22372@eng.pdn.ac.lk",
+      "eNumber": "E/22/372"
+    }
+  ],
   "supervisors": [],
   "tags": [
     "Embedded Systems",
